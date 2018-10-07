@@ -1,0 +1,22 @@
+.multi-header-table th {
+  border: none !important;
+  vertical-align: middle !important;
+}
+
+.multi-header-table td {
+  border-bottom: 1px solid #c8ced3 !important;
+  vertical-align: middle !important;
+}
+
+.multi-header-table thead {
+  border-bottom: 2px solid #c8ced3 !important;
+}
+
+.multi-header-table .alert {
+  padding: 0.35rem 1rem;
+  margin: 0;
+}
+
+.multi-header-table .alert .close {
+  padding: 0.2rem 0.75rem;
+}
