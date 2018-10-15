@@ -8,11 +8,12 @@ const checkLogin = async () => {
   return isLogin;
 };
 
-const register = async ({ id, username, email, password, repassword, ...params }) => {
+const register = async ({ id, username, email, phone, password, repassword, ...params }) => {
   return await Axios.Post("/auth/owner", {
     id: id,
     username: username,
     email: email,
+    phone: phone,
     password: password,
     repassword: repassword
   });

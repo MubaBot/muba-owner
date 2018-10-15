@@ -82,6 +82,12 @@ class Register extends Component {
                       </InputGroup>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
+                          <InputGroupText>@</InputGroupText>
+                        </InputGroupAddon>
+                        <Input name="phone" type="phone" placeholder="phone" autoComplete="phone" onChange={this.onChange} />
+                      </InputGroup>
+                      <InputGroup className="mb-3">
+                        <InputGroupAddon addonType="prepend">
                           <InputGroupText>
                             <i className="icon-lock" />
                           </InputGroupText>

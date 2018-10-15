@@ -6,41 +6,51 @@ export default {
       icon: "icon-speedometer"
     },
     {
-      name: "Crawler",
-      icon: "fa fa-search",
-      url: "/crawler",
+      name: "사업장",
+      icon: "icon-speedometer",
       children: [
         {
-          name: "Dashboard",
-          url: "/crawler/dashboard",
-          icon: "fa fa-tachometer"
+          name: "사업장 관리",
+          url: "/business/list",
+          icon: "icon-speedometer"
         },
         {
-          name: "Configuration",
-          url: "/crawler/config",
-          icon: "fa fa-wrench"
-        },
-        {
-          name: "Contents",
-          url: "/crawler/contents",
-          icon: "fa fa-file-text-o"
-        },
-        {
-          name: "Shops",
-          url: "/crawler/shops",
-          icon: "fa fa-building"
-        },
-        {
-          name: "Keyword",
-          url: "/crawler/keywords",
-          icon: "fa fa-tags"
-        },
-        {
-          name: "Working",
-          url: "/crawler/working",
-          icon: "fa fa-tasks"
+          name: "사업장 등록",
+          url: "/business/register",
+          icon: "icon-speedometer"
         }
       ]
+    },
+    {
+      name: "주문 관리",
+      icon: "icon-speedometer",
+      children: [
+        {
+          name: "주문 목록",
+          url: "/order/list",
+          icon: "icon-speedometer"
+        },
+        {
+          name: "주문 승인",
+          url: "/order/admission",
+          icon: "icon-speedometer"
+        },
+        {
+          name: "배송 관리",
+          url: "/order/delivery",
+          icon: "icon-speedometer"
+        }
+      ]
+    },
+    {
+      name: "상점 관리",
+      url: "/shop",
+      icon: "icon-speedometer"
+    },
+    {
+      name: "무바 등록 관리",
+      url: "/payment",
+      icon: "icon-speedometer"
     }
     // {
     //   title: true,

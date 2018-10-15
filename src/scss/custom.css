@@ -20,3 +20,8 @@
 .multi-header-table .alert .close {
   padding: 0.2rem 0.75rem;
 }
+
+.DateRangePicker td {
+  padding: 0;
+  vertical-align: middle;
+}

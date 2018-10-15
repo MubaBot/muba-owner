@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert } from "reactstrap";
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Alert, NavLink } from "reactstrap";
 import { login, checkLogin } from "api/axios/auth";
 
 class Login extends Component {
@@ -65,7 +65,7 @@ class Login extends Component {
                         </Col>
                         <Col xs="4">
                           <Button color="success" className="px-4">
-                            Register
+                            <NavLink href="#/register">Register</NavLink>
                           </Button>
                         </Col>
                       </Row>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiAxios = axios.create({
-  baseURL: "http://192.168.0.8:3030",
+  baseURL: "https://api.mubabot.com",
   headers: { "Access-Control-Allow-Origin": "*" }
 });
 
@@ -18,7 +18,10 @@ apiAxios.interceptors.response.use(
 
 if (localStorage.getItem("authentication") == null) localStorage.setItem("authentication", "null");
 
-const appendAuth = options => (localStorage.getItem("authentication") !== "null" ? { ...options, headers: { ...options.headers, "x-access-token": localStorage.getItem("authentication") } } : options);
+const appendAuth = options =>
+  localStorage.getItem("authentication") !== "null"
+    ? { ...options, headers: { ...options.headers, "x-access-token": localStorage.getItem("authentication") } }
+    : options;
 const optionBuild = options => appendAuth({ data: options });
 
 const setAuth = (auth = "null") => {
