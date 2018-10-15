@@ -45,7 +45,7 @@ export default class MenuItem extends Component {
 
   render() {
     return (
-      <Col sm="2">
+      <Col sm="3">
         <CardImg top width="100%" src={this.props.URL || "https://placeholdit.imgix.net/~text?txtsize=33&txt=No%20Image&w=318&h=180"} alt="Card image cap" />
 
         <Card body>
