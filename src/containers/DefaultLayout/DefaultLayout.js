@@ -55,13 +55,15 @@ class DefaultLayout extends Component {
             let sum = 0;
             for (var i in orders.order_menus) sum += orders.order_menus[i].COUNT;
 
+            const redirectPage = () => this.props.history.push("/order/list/1");
+
             Push.create("Muba 주문 알림", {
               body: [orders.ADDRESS, sum + "개 주문"].join("\n"),
               icon: "/icon.png",
               timeout: 4000,
               onClick: function() {
                 window.focus();
-                this.props.history.push("/order/list/1");
+                redirectPage();
                 this.close();
               }
             });
