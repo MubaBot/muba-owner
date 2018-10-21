@@ -36,7 +36,8 @@ export default class RequestList extends Component {
 
   selectShop = id => {
     setBusinessShop(id);
-    this.setState({ selectedShop: id });
+    // this.setState({ selectedShop: id });
+    window.location.reload();
   };
 
   render() {

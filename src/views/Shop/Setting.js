@@ -38,7 +38,6 @@ export default class Setting extends Component {
 
   render() {
     const addr = typeof this.props.shop_address.ADDRESS === "string" ? JSON.parse(this.props.shop_address.ADDRESS) : this.props.shop_address.ADDRESS;
-    console.log(addr);
 
     const address = [addr.state, addr.city, addr.address1, addr.options].join(" ");
     return (

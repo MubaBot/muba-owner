@@ -7,8 +7,8 @@ class Login extends Component {
     super(props);
     this.state = { visible: false, alert: "" };
 
-    checkLogin().then(isLogin => {
-      if (isLogin === true) this.props.history.push("/dashboard");
+    checkLogin().then(data => {
+      if (data.isLogin === true) this.props.history.push("/dashboard");
     });
   }
 

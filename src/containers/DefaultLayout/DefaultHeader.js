@@ -3,7 +3,7 @@ import { DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLink } fro
 import PropTypes from "prop-types";
 
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
-import { setAuth } from "api/axios";
+import { AuthApi } from "api";
 
 const propTypes = {
   children: PropTypes.node
@@ -13,7 +13,7 @@ const defaultProps = {};
 
 class DefaultHeader extends Component {
   Logout = () => {
-    setAuth("null");
+    AuthApi.removeAuthentication();
     this.props.history.push("/login");
   };
 

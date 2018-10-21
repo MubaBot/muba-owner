@@ -4,7 +4,7 @@ import { isEqual } from "lodash";
 
 import OrderListItem from "./OrderListItem";
 
-import { OrderApi } from "api";
+import { OrderApi, ShopApi } from "api";
 
 import Pagination from "components/Pagination";
 
@@ -15,7 +15,8 @@ export default class OrderList extends Component {
     this.state = {
       page: parseInt(this.props.match.params.page, 10) || 1,
       lists: [],
-      count: 0
+      count: 0,
+      selectedShop: parseInt(ShopApi.getSelectedBusinessShop(), 10)
     };
   }
 
@@ -33,7 +34,7 @@ export default class OrderList extends Component {
   updateOrderList = page => {
     const p = page || this.state.page;
 
-    return OrderApi.getOrderListForOwnerByAdmission({ page: p })
+    return OrderApi.getOrderListForOwnerByAdmission({ id: this.state.selectedShop, page: p })
       .then(result => {
         const update = !isEqual(this.state.lists, result.data.lists);
 

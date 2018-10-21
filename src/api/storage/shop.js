@@ -1,11 +1,15 @@
-const ShopStorageKey = "shop";
+import StorageKeys from "./index";
 
 const setBusinessShop = async id => {
-  localStorage.setItem(ShopStorageKey, id);
+  return localStorage.setItem(StorageKeys.ShopStorageKey, id);
 };
 
 const getSelectedBusinessShop = () => {
-  return localStorage.getItem(ShopStorageKey);
+  return localStorage.getItem(StorageKeys.ShopStorageKey);
 };
 
-export { setBusinessShop, getSelectedBusinessShop };
+const removeBusinessShop = async () => {
+  return localStorage.removeItem(StorageKeys.ShopStorageKey);
+};
+
+export { setBusinessShop, getSelectedBusinessShop, removeBusinessShop };

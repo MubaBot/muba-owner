@@ -1,11 +1,11 @@
 import * as Axios from "./index";
 
-const getOrderListForOwner = async ({ page }) => {
-  return Axios.Get("/api/order/owner/" + page);
+const getOrderListForOwner = async ({ id, page }) => {
+  return Axios.Get(["/api/shop", id, "order", page].join("/"));
 };
 
-const getOrderListForOwnerByAdmission = async ({ page }) => {
-  return Axios.Get("/api/order/owner/admission/" + page);
+const getOrderListForOwnerByAdmission = async ({ id, page }) => {
+  return Axios.Get(["/api/shop", id, "order", "admission", page].join("/"));
 };
 
 const setOrderAllow = async ({ id }) => {
