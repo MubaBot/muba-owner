@@ -1,5 +1,3 @@
-import { ShopApi } from "api";
-
 import StorageKeys from "./index";
 
 const setAuthentication = async authentication => {
@@ -11,8 +9,7 @@ const getAuthentication = async () => {
 };
 
 const removeAuthentication = async () => {
-  localStorage.removeItem(StorageKeys.authenticationKey);
-  return ShopApi.removeBusinessShop();
+  return localStorage.removeItem(StorageKeys.authenticationKey);
 };
 
 const isLogin = async () => {
