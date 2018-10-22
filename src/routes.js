@@ -40,16 +40,16 @@ const Shop = Loadable({
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: "/", exact: true, name: "Home", component: DefaultLayout },
-  { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  // { path: "/dashboard", name: "Dashboard", component: Dashboard },
 
-  { path: "/business/list", name: "Dashboard", component: BusinessShopList },
-  { path: "/business/register", name: "BusinessRegister", component: BusinessRegister },
+  { path: "/business/list", name: "사업장 목록", component: BusinessShopList },
+  { path: "/business/register", name: "사업장 등록", component: BusinessRegister },
 
-  { path: "/order/list/:page?", name: "Dashboard", component: OrderList },
+  { path: "/order/list/:page?", name: "주문 목록", component: OrderList },
   { path: "/order/admission/:page?", name: "Dashboard", component: OrderAdmissionList },
   { path: "/order/delivery", name: "Dashboard", component: Dashboard },
 
-  { path: "/shop", name: "Shop", component: Shop },
+  { path: "/shop", name: "상점 관리", component: Shop },
 
   { path: "/payment", name: "Dashboard", component: Dashboard }
 ];

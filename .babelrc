@@ -4,9 +4,7 @@
     [
       "module-resolver",
       {
-        "root": [
-          "./src"
-        ],
+        "root": ["./src"],
         "alias": {
           "test": "./test",
           "underscore": "lodash"
@@ -22,6 +20,7 @@
       }
     ],
     "transform-object-rest-spread",
-    "transform-class-properties"
+    "transform-class-properties",
+    "wildcard"
   ]
 }

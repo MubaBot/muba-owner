@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
 
 export default class ShopListItem extends Component {
   render() {
@@ -9,11 +8,9 @@ export default class ShopListItem extends Component {
         <td>{this.props.ADDRESS}</td>
         <td>{this.props.PHONE}</td>
         <td>{this.props.HOMEPAGE}</td>
-        <td>0</td>
-        <td onClick={() => this.props.selectShop(this.props._id)}>
-          <Button color="success" disabled={this.props.selected}>
-            선택
-          </Button>
+        <td className="text-center">0</td>
+        <td className="text-center" onClick={() => this.props.selectShop(this.props._id)}>
+          <button disabled={this.props.selected}>선택</button>
         </td>
       </tr>
     );

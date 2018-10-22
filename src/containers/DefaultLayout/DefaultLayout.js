@@ -4,23 +4,27 @@ import { Container } from "reactstrap";
 
 import {
   AppAside,
-  AppBreadcrumb,
-  AppFooter,
-  AppHeader,
+  // AppBreadcrumb,
+  // AppFooter,
+  // AppHeader,
   AppSidebar,
   AppSidebarFooter,
   AppSidebarForm,
-  AppSidebarHeader,
-  AppSidebarMinimizer,
-  AppSidebarNav
+  AppSidebarHeader
+  // AppSidebarMinimizer
+  // AppSidebarNav
 } from "@coreui/react";
+
+import AppSidebarNav from "./AppComponents/SidebarNav";
+import AppBreadcrumb from "./AppComponents/Breadcrumb";
+
 // sidebar nav config
 import navigation from "../../_nav";
 // routes config
 import routes from "../../routes";
 import DefaultAside from "./DefaultAside";
-import DefaultFooter from "./DefaultFooter";
-import DefaultHeader from "./DefaultHeader";
+// import DefaultFooter from "./DefaultFooter";
+// import DefaultHeader from "./DefaultHeader";
 
 import { checkLogin } from "api/axios/auth";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
@@ -30,6 +34,10 @@ import Push from "push.js";
 class DefaultLayout extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      name: "관리자"
+    };
 
     checkLogin().then(async data => {
       if (data.isLogin === false) this.props.history.push("/login");
@@ -59,8 +67,10 @@ class DefaultLayout extends Component {
               body: [orders.ADDRESS, sum + "개 주문"].join("\n"),
               icon: "/icon.png",
               timeout: 4000,
+              link: "https://owner.mubabot.com/#/order/list",
               onClick: function() {
                 window.focus();
+                window.location.reload();
                 this.close();
               }
             });
@@ -72,19 +82,19 @@ class DefaultLayout extends Component {
   render() {
     return (
       <div className="app">
-        <AppHeader fixed>
+        {/* <AppHeader fixed>
           <DefaultHeader {...this.props} />
-        </AppHeader>
+        </AppHeader> */}
         <div className="app-body">
           <AppSidebar fixed display="lg">
             <AppSidebarHeader />
             <AppSidebarForm />
             <AppSidebarNav navConfig={navigation} {...this.props} />
             <AppSidebarFooter />
-            <AppSidebarMinimizer />
+            {/* <AppSidebarMinimizer /> */}
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} />
+            <AppBreadcrumb appRoutes={routes} history={this.props.history} name={this.state.name} />
             <Container fluid>
               <Switch>
                 {routes.map((route, idx) => {
@@ -92,7 +102,7 @@ class DefaultLayout extends Component {
                     <Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => <route.component {...props} />} />
                   ) : null;
                 })}
-                <Redirect from="/" to="/dashboard" />
+                <Redirect from="/" to="/business/list" />
               </Switch>
             </Container>
           </main>
@@ -100,9 +110,9 @@ class DefaultLayout extends Component {
             <DefaultAside />
           </AppAside>
         </div>
-        <AppFooter>
+        {/* <AppFooter>
           <DefaultFooter />
-        </AppFooter>
+        </AppFooter> */}
       </div>
     );
   }

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
-import { Table } from "reactstrap";
+// import { Table } from "reactstrap";
 import { isEqual } from "lodash";
+
+import { Table } from "components/Table";
 
 import ShopListItem from "./ShopListItem";
 
@@ -44,14 +46,22 @@ export default class RequestList extends Component {
     return (
       <Fragment>
         <Table>
+          <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col width="113px" />
+          </colgroup>
           <thead>
             <tr>
               <th>가게 이름</th>
               <th>주소</th>
               <th>번호</th>
               <th>홈페이지</th>
-              <th>메뉴</th>
-              <th>관리</th>
+              <th className="text-center">메뉴</th>
+              <th className="text-center">관리</th>
             </tr>
           </thead>
           <tbody>
