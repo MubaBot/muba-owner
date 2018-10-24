@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from "react";
-// import { Table } from "reactstrap";
-import { isEqual } from "lodash";
 
 import { Table } from "components/Table";
 
@@ -24,13 +22,7 @@ export default class RequestList extends Component {
     const p = page || this.state.page;
 
     return getBusinessShopsList({ page: p })
-      .then(result => {
-        const update = !isEqual(this.state.lists, result.data.lists);
-
-        this.setState({
-          lists: update ? result.data.lists : this.state.lists
-        });
-      })
+      .then(result => this.setState({ lists: result.data.lists }))
       .catch(err => console.log(err));
   };
 

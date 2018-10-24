@@ -6,7 +6,9 @@ const checkLogin = async () => {
   const isLogin = result.data.isLogin;
 
   if (!isLogin) AuthApi.removeAuthentication();
-  return isLogin;
+  await AuthApi.setAuthentication(result.data.token);
+
+  return result.data;
 };
 
 const register = async ({ id, username, email, phone, password, repassword, ...params }) => {

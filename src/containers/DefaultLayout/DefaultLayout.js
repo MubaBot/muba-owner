@@ -26,7 +26,6 @@ import DefaultAside from "./DefaultAside";
 // import DefaultFooter from "./DefaultFooter";
 // import DefaultHeader from "./DefaultHeader";
 
-import { checkLogin } from "api/axios/auth";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import { ShopApi, AuthApi } from "api";
 import Push from "push.js";
@@ -36,13 +35,14 @@ class DefaultLayout extends Component {
     super(props);
 
     this.state = {
-      name: "관리자"
+      name: ""
     };
 
-    checkLogin().then(async data => {
+    AuthApi.checkLogin().then(async data => {
       if (data.isLogin === false) this.props.history.push("/login");
       else {
-        // await AuthApi.setAuthentication(data.token);
+        this.setState({ name: data.name });
+        await AuthApi.setAuthentication(data.token);
 
         var client = new W3CWebSocket("wss://push.mubabot.com/", "order");
 
