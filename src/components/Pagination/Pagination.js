@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import { isEqual } from "lodash";
 
 const pageCount = 3;
@@ -54,23 +53,33 @@ export default class TablePagination extends Component {
 
   render() {
     return (
-      <Pagination>
-        <PaginationItem disabled={this.state.page === 1}>
-          <PaginationLink previous onClick={() => this.onClick(this.state.page - 1)} />
-        </PaginationItem>
+      <tfoot>
+        <tr>
+          <td colSpan="100">
+            <ul className="pagination">
+              <li>
+                <button disabled={this.state.page === 1} onClick={() => this.onClick(this.state.page - 1)}>
+                  «
+                </button>
+              </li>
 
-        {this.state.items.map((x, i) => (
-          <PaginationItem key={x} active={x === this.state.page}>
-            <PaginationLink tag="button" onClick={() => this.onClick(x)}>
-              {x}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
+              {this.state.items.map((x, i) => (
+                <li key={x}>
+                  <button className={x === this.state.page ? "active" : ""} disabled={this.state.page === 1} onClick={() => this.onClick(x)}>
+                    {x}
+                  </button>
+                </li>
+              ))}
 
-        <PaginationItem disabled={this.state.page === this.state.end}>
-          <PaginationLink next onClick={() => this.onClick(this.state.page + 1)} />
-        </PaginationItem>
-      </Pagination>
+              <li>
+                <button disabled={this.state.page === this.state.end} onClick={() => this.onClick(this.state.page + 1)}>
+                  »
+                </button>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tfoot>
     );
   }
 }

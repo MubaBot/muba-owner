@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+
+import { Table } from "components/Table";
 
 import MenuOptionItem from "./MenuOptionItem";
 
@@ -24,21 +26,21 @@ export default class MenuOptionModal extends Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.modal} toggle={this.props.toggle} style={{ minWidth: 600, maxWidth: 900 }}>
+      <Modal isOpen={this.props.modal} toggle={this.props.toggle} style={{ minWidth: 680, maxWidth: 680 }}>
         <ModalHeader toggle={this.props.toggle}>{this.state.name}</ModalHeader>
         <ModalBody>
           <Table>
             <colgroup>
-              <col width="82px" />
+              <col width="53px" />
               <col />
               <col />
-              <col width="132px" />
+              <col />
             </colgroup>
             <thead>
               <tr>
-                <th className="text-center">사용</th>
-                <th className="text-center">이름</th>
-                <th className="text-center">가격</th>
+                <th className="alignCenter">사용</th>
+                <th className="alignCenter">옵션</th>
+                <th className="alignCenter">가격</th>
                 <th />
               </tr>
             </thead>
@@ -51,9 +53,7 @@ export default class MenuOptionModal extends Component {
           </Table>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={this.props.toggle}>
-            확인
-          </Button>
+          <button onClick={this.props.toggle}>확인</button>
         </ModalFooter>
       </Modal>
     );

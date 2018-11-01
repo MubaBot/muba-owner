@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+
+import { Table } from "components/Table";
 
 import MenuSaleItem from "./MenuSaleItem";
 
@@ -25,32 +27,30 @@ export default class MenuSaleModal extends Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.modal} toggle={this.props.toggle} style={{ minWidth: 900, maxWidth: 1200 }}>
-        <ModalHeader toggle={this.props.toggle}>
-          {this.state.name} - {this.state.price}원
-        </ModalHeader>
+      <Modal isOpen={this.props.modal} toggle={this.props.toggle} style={{ minWidth: 1050, maxWidth: 1050 }}>
+        <ModalHeader toggle={this.props.toggle}>{this.state.name}</ModalHeader>
         <ModalBody>
           <Table>
             <colgroup>
+              <col width="65px" />
               <col />
-              <col width="226x" />
-              <col />
-              <col />
-              <col />
-              <col />
+              <col width="65px" />
+              <col width="200px" />
+              <col width="65px" />
+              <col width="120px" />
+              <col width="135px" />
               <col />
             </colgroup>
             <thead>
               <tr>
-                <th className="text-center">날짜 제한 사용</th>
-                <th className="text-center">제한 날짜</th>
+                <th className="text-center">날짜 제한</th>
+                <th className="text-center">할인 기간</th>
 
-                <th className="text-center">시간 제한 사용</th>
-                <th className="text-center">시작 시간</th>
-                <th className="text-center">종료 시간</th>
+                <th className="text-center">시간 제한</th>
+                <th className="text-center">할인 시간</th>
 
-                <th className="text-center">판매 개수 제한</th>
-                <th className="text-center">할인 제한 개수</th>
+                <th className="text-center">할인 제한</th>
+                <th className="text-center">판매 개수</th>
                 <th className="text-center">가격</th>
 
                 <th />
@@ -65,9 +65,9 @@ export default class MenuSaleModal extends Component {
           </Table>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={this.props.toggle}>
+          <button color="secondary" onClick={this.props.toggle}>
             확인
-          </Button>
+          </button>
         </ModalFooter>
       </Modal>
     );

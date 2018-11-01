@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { Modal, ModalHeader, ModalBody, ListGroup, InputGroup, InputGroupAddon, Input, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+
+import SVG from "react-inlinesvg";
+import SearchIcon from "assets/img/icons/icon-search.svg";
+
 import SearchShopItem from "./SearchShopItem";
 
 import { searchShop } from "api/axios/shop";
@@ -16,28 +20,30 @@ export default class SearchModal extends Component {
     searchShop({ keyword: this.state.keyword, page: this.state.page }).then(res => this.setState({ lists: res.data.lists }));
   };
 
+  onSearch = e => (e.keyCode === 13 ? this.searchShops() : null);
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
     return (
-      <Modal isOpen={this.props.modal}>
-        <ModalHeader toggle={this.props.toggle}>가게 선택</ModalHeader>
+      <Modal className="business" isOpen={this.props.modal}>
+        <ModalHeader toggle={this.props.toggle}>상점 찾기</ModalHeader>
         <ModalBody>
-          <InputGroup>
-            <Input name="keyword" placeholder="Search" onChange={this.onChange} />
-            <InputGroupAddon addonType="append">
-              <Button color="primary" onClick={this.searchShops}>
-                Search
-              </Button>
-            </InputGroupAddon>
-          </InputGroup>
+          <div>
+            <input name="keyword" placeholder="상점 이름 검색" onChange={this.onChange} onKeyDown={this.onSearch} />
+            <button onClick={this.searchShops}>
+              <SVG src={SearchIcon} />
+            </button>
+          </div>
 
-          <ListGroup flush>
+          <ol>
             {this.state.lists.map((x, i) => (
               <SearchShopItem key={i} {...x} selectShop={this.props.selectShop} />
             ))}
-          </ListGroup>
+          </ol>
         </ModalBody>
+        <ModalFooter>
+          <button onClick={this.props.register}>새 가게 등록</button>
+        </ModalFooter>
       </Modal>
     );
   }

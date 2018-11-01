@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
+
+import accounting from "accounting-js";
 
 export default class OrderMenuItem extends Component {
   constructor(props) {
@@ -19,14 +20,14 @@ export default class OrderMenuItem extends Component {
     if (this.props.MENUS.length)
       return this.props.MENUS.map((x, i) => {
         return x.COUNT ? (
-          <DropdownItem key={i}>
-            {x.shop_menu.MENUNAME} {x.order_menu_options.length ? "(" + this.getOptions(x) + ") " : ""}- ({this.getPrice(x)}
-            원, {x.COUNT}
+          <li key={i}>
+            {x.shop_menu.MENUNAME} {x.order_menu_options.length ? "/ " + this.getOptions(x) + " " : ""}
+            <span>{accounting.formatMoney(this.getPrice(x), { symbol: "원", format: "%v%s", precision: 0 })}</span> ({x.COUNT}
             개)
-          </DropdownItem>
+          </li>
         ) : null;
       });
-    return <DropdownItem disabled>목록이 없습니다.</DropdownItem>;
+    return <li>목록이 없습니다.</li>;
   };
 
   getPrice = menu => {
@@ -50,16 +51,6 @@ export default class OrderMenuItem extends Component {
   };
 
   render() {
-    return (
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggle()}>
-        <DropdownToggle tag="span" onClick={() => this.toggle()} data-toggle="dropdown" aria-expanded={this.state.dropdownOpen}>
-          {this.state.count || "0"}
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem header>주문 목록</DropdownItem>
-          {this.DropdownItems()}
-        </DropdownMenu>
-      </Dropdown>
-    );
+    return <ol>{this.DropdownItems()}</ol>;
   }
 }

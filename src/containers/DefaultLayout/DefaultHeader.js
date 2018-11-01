@@ -38,12 +38,8 @@ class DefaultHeader extends Component {
               <img src={"https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: "auto" }}>
-              <DropdownItem header tag="div" className="text-center">
-                <strong>Account</strong>
-              </DropdownItem>
-              <DropdownItem onClick={this.Logout}>
-                <i className="fa fa-lock" /> Logout
-              </DropdownItem>
+              <DropdownItem>설정</DropdownItem>
+              <DropdownItem onClick={this.Logout}>로그아웃</DropdownItem>
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>

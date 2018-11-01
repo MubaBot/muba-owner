@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Row, Col, Card, CardHeader, CardBody, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 import { requestRegister, uploadPhoto } from "api/axios/business";
 import SearchModal from "./SearchModal";
+import RegisterModal from "./RegisterModal";
 
 export default class Register extends Component {
   state = {
@@ -27,7 +27,11 @@ export default class Register extends Component {
     uploadPhoto(data).then(res => this.setState({ file: res.data.name, ext: res.data.ext }));
   };
 
-  toggle = () => this.setState({ modal: !this.state.modal });
+  toggle = e => {
+    if (e) e.preventDefault();
+    this.setState({ modal: !this.state.modal });
+  };
+
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   selectShop = (id, name) => {
@@ -53,50 +57,47 @@ export default class Register extends Component {
       .catch(err => {});
   };
 
+  register = () => {
+    this.toggle();
+  };
+
   render() {
     return (
       <div className="animated fadeIn">
-        <Card>
-          <CardHeader>
-            <i className="fa fa-align-justify" /> 사업장 등록
-          </CardHeader>
-          <CardBody>
-            <Row>
-              <Col xs="12" sm="6" lg="3">
-                <Button onClick={this.toggle}>가게 선택</Button>
-                <Label>{this.state.shop}</Label>
-              </Col>
-            </Row>
-            <Form onSubmit={this.onSubmit}>
-              <Row>
-                <Col xs="12" sm="6" lg="3">
-                  <FormGroup>
-                    <Label for="name">사장님 이름</Label>
-                    <Input type="text" name="name" id="name" placeholder="Name" onChange={this.onChange} />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs="12" sm="6" lg="3">
-                  <FormGroup>
-                    <Label for="number">사업자 등록 번호</Label>
-                    <Input type="text" name="number" id="number" placeholder="ID" onChange={this.onChange} />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <FormGroup>
-                    <Label for="file">사업자등록증 첨부</Label>
-                    <Input type="file" name="file" accept="image/*" onChange={this.handleFileUpload} />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Button color="success">Submit</Button>
-            </Form>
-          </CardBody>
-          <SearchModal modal={this.state.modal} toggle={this.toggle} selectShop={this.selectShop} />
-        </Card>
+        <div className="registerShop">
+          <form onSubmit={this.onSubmit}>
+            <div className="formGroup">
+              <p>상점 찾기</p>
+              <div>
+                <a onClick={this.toggle}>{this.state.shop || "상점 찾기"}</a>
+                <button onClick={this.toggle}>검색</button>
+              </div>
+            </div>
+
+            <div className="formGroup">
+              <p>사장님 이름</p>
+              <input type="text" name="name" id="name" placeholder="사장님 이름" onChange={this.onChange} />
+            </div>
+            <div className="formGroup">
+              <p>사업자등록번호</p>
+              <input type="text" name="number" id="number" placeholder="사업자등록번호" onChange={this.onChange} />
+            </div>
+
+            <div className="formGroup">
+              <p>사업자등록증</p>
+              <div className="img">
+                <span>파일 선택</span>
+                <input type="file" name="file" accept="image/*" onChange={this.handleFileUpload} />
+              </div>
+              <p className="files">{this.state.file ? "파일 업로드됨" : "선택된 파일 없음"}</p>
+            </div>
+
+            <button>신청하기</button>
+          </form>
+
+          <SearchModal modal={this.state.modal} toggle={this.toggle} selectShop={this.selectShop} register={this.register} />
+          <RegisterModal />
+        </div>
       </div>
     );
   }

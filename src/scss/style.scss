@@ -8779,8 +8779,9 @@ html[dir="rtl"] .aside-menu {
     position: fixed;
     z-index: 1020;
     width: 100%; }
-  .header-fixed .app-body {
-    margin-top: 55px; }
+  // .header-fixed .app-body {
+  //   margin-top: 55px; 
+  // }
   .sidebar-fixed .sidebar {
     position: fixed;
     z-index: 1019;
@@ -9309,8 +9310,8 @@ html[dir="rtl"] .aside-menu-show .aside-menu {
       position: absolute;
       left: 50%;
       margin-left: -77.5px; }
-  .app-body {
-    margin-top: 55px; }
+  // .app-body {
+  //   margin-top: 55px; }
   .sidebar {
     position: fixed;
     z-index: 1019;

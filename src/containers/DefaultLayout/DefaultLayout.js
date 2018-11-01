@@ -44,7 +44,7 @@ class DefaultLayout extends Component {
         this.setState({ name: data.name });
         await AuthApi.setAuthentication(data.token);
 
-        var client = new W3CWebSocket("wss://push.mubabot.com/", "order");
+        var client = new W3CWebSocket("ws://192.168.0.8:5520/", "order");
 
         client.onerror = () => console.log("Connection Error");
         client.onclose = () => console.log("Push Socket Closed");

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Card, CardHeader, CardBody } from "reactstrap";
 
 import { ShopApi } from "api";
 import { getShopInfo } from "api/axios/shop";
@@ -55,15 +54,8 @@ export default class Shop extends Component {
 
   render() {
     return (
-      <div className="animated fadeIn">
-        <Card>
-          <CardHeader>
-            <i className="fa fa-align-justify" /> {this.state.SHOPNAME}
-          </CardHeader>
-          <CardBody>
-            <Setting {...this.state} />
-          </CardBody>
-        </Card>
+      <div className="animated fadeIn shop">
+        <Setting {...this.state} updateShopInfo={this.updateShopInfo} />
         <Menu shop={this.state.shop} shop_menus={this.state.shop_menus} updateShopInfo={this.updateShopInfo} />
       </div>
     );

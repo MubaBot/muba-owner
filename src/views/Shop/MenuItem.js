@@ -1,23 +1,36 @@
 import React, { Component } from "react";
-import { Col, Card, CardImg, CardTitle, InputGroup, InputGroupAddon, InputGroupText, Input, ButtonGroup, Button } from "reactstrap";
-
 import Switch from "react-switch";
+
+import accounting from "accounting-js";
+import SVG from "react-inlinesvg";
+import TrashIcon from "assets/img/icons/icon-trash.svg";
 
 import { ShopApi } from "api";
 
 export default class MenuItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: props.MENUNAME || "", price: props.PRICE || 0, sold: props.SOLD || false };
+    this.state = { name: props.MENUNAME || "", price: props.PRICE || 0, sold: props.SOLD || false, rep: props.REP || false };
   }
 
   componentWillReceiveProps = nextProps => this.setState({ name: nextProps.MENUNAME || "", price: nextProps.PRICE || 0 });
 
   handleChange = sold => this.setState({ sold });
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  handleChangeRep = rep => this.setState({ rep });
 
-  onRegister = () => {
-    ShopApi.addMenu({ shop: this.props.shop, name: this.state.name, price: this.state.price, sold: this.state.sold })
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  onChangePrice = e => {
+    const num = e.target.value.replace(/,/gi, "");
+    if (parseInt(num, 10) >= 0) {
+      this.setState({ price: parseInt(num, 10) });
+    } else {
+      this.setState({ price: 0 });
+    }
+  };
+
+  onRegister = e => {
+    e.preventDefault();
+    ShopApi.addMenu({ shop: this.props.shop, name: this.state.name, price: this.state.price, sold: this.state.sold, rep: this.state.rep })
       .then(res => {
         this.props.updateShopInfo();
         alert("등록하였습니다.");
@@ -25,8 +38,16 @@ export default class MenuItem extends Component {
       .catch(err => console.log(err));
   };
 
-  onModify = () => {
-    ShopApi.modifyMenu({ shop: this.props.shop, menu: this.props.id, name: this.state.name, price: this.state.price, sold: this.state.sold })
+  onModify = e => {
+    e.preventDefault();
+    ShopApi.modifyMenu({
+      shop: this.props.shop,
+      menu: this.props.id,
+      name: this.state.name,
+      price: this.state.price,
+      sold: this.state.sold,
+      rep: this.state.rep
+    })
       .then(res => {
         this.props.updateShopInfo();
         alert("수정하였습니다.");
@@ -35,83 +56,100 @@ export default class MenuItem extends Component {
   };
 
   onDelete = () => {
-    ShopApi.deleteMenu({ shop: this.props.shop, menu: this.props.id })
-      .then(res => {
-        this.props.updateShopInfo();
-        alert("삭제하였습니다.");
-      })
-      .catch(err => console.log(err));
+    if (window.confirm("메뉴를 삭제하시겠습니까?"))
+      ShopApi.deleteMenu({ shop: this.props.shop, menu: this.props.id })
+        .then(res => {
+          this.props.updateShopInfo();
+          alert("삭제하였습니다.");
+        })
+        .catch(err => console.log(err));
   };
 
   render() {
     return (
-      <Col sm="3">
-        <CardImg top width="100%" src={this.props.URL || "https://placeholdit.imgix.net/~text?txtsize=33&txt=No%20Image&w=318&h=180"} alt="Card image cap" />
+      <div>
+        <div className="photo">
+          <img width="100%" src={this.props.URL || "http://192.168.0.8:3030/static/public/img/noimage.png"} alt="Menu" />
+        </div>
 
-        <Card body>
-          <CardTitle>{this.props.register ? "등록하기" : this.props.MENUNAME}</CardTitle>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText>이름</InputGroupText>
-            </InputGroupAddon>
-            <Input type="text" name="name" placeholder="이름" value={this.state.name} onChange={this.onChange} />
-          </InputGroup>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText>가격</InputGroupText>
-            </InputGroupAddon>
-            <Input type="number" name="price" style={{ textAlign: "right" }} placeholder="가격" value={this.state.price} onChange={this.onChange} />
-            <InputGroupAddon addonType="append">
-              <InputGroupText>원</InputGroupText>
-            </InputGroupAddon>
-          </InputGroup>
-          <InputGroup>
-            <label>
-              <span>품절</span>
-              <Switch
-                onChange={this.handleChange}
-                checked={this.state.sold}
-                onColor="#86d3ff"
-                onHandleColor="#2693e6"
-                handleDiameter={30}
-                uncheckedIcon={false}
-                checkedIcon={false}
-                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                height={20}
-                width={48}
+        {this.props.register ? null : (
+          <div className="trash">
+            <a onClick={this.onDelete}>
+              <SVG src={TrashIcon} />
+            </a>
+          </div>
+        )}
+
+        <form>
+          <div className="input">
+            <input type="text" name="name" placeholder="메뉴 이름" value={this.state.name} onChange={this.onChange} />
+            <div>
+              <input
+                type="text"
+                name="price"
+                placeholder="가격"
+                value={accounting.formatMoney(this.state.price, { symbol: "", format: "%v", precision: 0 })}
+                onChange={this.onChangePrice}
               />
-            </label>
-          </InputGroup>
-          <InputGroup>
-            <label>
-              <span>사진</span>
-              <Input type="file" name="file" id="exampleFile" />
-            </label>
-          </InputGroup>
+              <span>원</span>
+            </div>
+          </div>
+          <div className="switch">
+            <span>품절</span>
+            <Switch
+              onChange={this.handleChange}
+              checked={this.state.sold}
+              offColor="#dee2e6"
+              onColor="#468ef7"
+              onHandleColor="#FFF"
+              handleDiameter={22}
+              uncheckedIcon={false}
+              checkedIcon={false}
+              boxShadow="0px 0px 0px rgba(0, 0, 0, 0.6)"
+              activeBoxShadow="0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
+              height={24}
+              width={60}
+            />
 
-          <ButtonGroup>
-            {this.props.register ? null : (
-              <Button color="secondary" onClick={() => this.props.showOptionModal(this.props.id)}>
-                옵션
-              </Button>
-            )}
-            {this.props.register ? null : (
-              <Button color="secondary" onClick={() => this.props.showSaleModal(this.props.id)}>
-                세일
-              </Button>
-            )}
-            <Button color="success" onClick={this.props.register ? this.onRegister : this.onModify}>
-              {this.props.register ? "추가" : "수정"}
-            </Button>
-            {this.props.register ? null : (
-              <Button color="danger" onClick={this.onDelete}>
-                삭제
-              </Button>
-            )}
-          </ButtonGroup>
-        </Card>
-      </Col>
+            <span>대표 메뉴</span>
+            <Switch
+              onChange={this.handleChangeRep}
+              checked={this.state.rep}
+              offColor="#dee2e6"
+              onColor="#468ef7"
+              onHandleColor="#FFF"
+              handleDiameter={22}
+              uncheckedIcon={false}
+              checkedIcon={false}
+              boxShadow="0px 0px 0px rgba(0, 0, 0, 0.6)"
+              activeBoxShadow="0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
+              height={24}
+              width={60}
+            />
+          </div>
+
+          <div className="img">
+            <span>사진 변경</span>
+            <input type="file" name="file" id="exampleFile" />
+          </div>
+
+          <div className="controller" hidden={this.props.register}>
+            <a onClick={() => this.props.showOptionModal(this.props.id)}>옵션</a>
+            <a onClick={() => this.props.showSaleModal(this.props.id)}>할인</a>
+          </div>
+
+          {this.props.register ? (
+            <button className="register" onClick={this.onRegister}>
+              추가
+            </button>
+          ) : null}
+          {this.props.register ? null : (
+            <button className="modify" onClick={this.onModify}>
+              수정
+            </button>
+          )}
+        </form>
+      </div>
     );
   }
 }

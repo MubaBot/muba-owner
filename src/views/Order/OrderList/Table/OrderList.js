@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { Table } from "reactstrap";
+import React, { Component } from "react";
+import { Table } from "components/Table";
 import { isEqual } from "lodash";
 
 import OrderListItem from "./OrderListItem";
@@ -55,36 +55,44 @@ export default class OrderList extends Component {
 
   render() {
     return (
-      <Fragment>
-        <Table>
-          <colgroup>
-            <col />
-            <col />
-            <col />
-            <col />
-            <col />
-            <col />
-            <col width="132px" />
-          </colgroup>
-          <thead>
+      <Table>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th className="alignCenter">No.</th>
+            <th className="alignCenter">고객명</th>
+            <th>주소</th>
+            <th className="alignCenter">전화번호</th>
+            <th>메뉴</th>
+            <th>요구사항</th>
+            <th className="alignRight">가격</th>
+            <th className="alignCenter">승인/거절</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.lists.map((x, i) => (
+            <OrderListItem key={x._id} no={i + 1 + (this.state.page - 1) * this.state.count} id={x._id} {...x} reloadList={this.updateOrderList} />
+          ))}
+
+          {this.state.lists.length === 0 ? (
             <tr>
-              <th>고객 이름</th>
-              <th>주소</th>
-              <th>번호</th>
-              <th>메뉴</th>
-              <th>요구사항</th>
-              <th>가격</th>
-              <th />
+              <td className="alignCenter" colSpan="8">
+                주문 기록이 없습니다.
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {this.state.lists.map((x, i) => (
-              <OrderListItem key={x._id} id={x._id} {...x} reloadList={this.updateOrderList} />
-            ))}
-          </tbody>
-        </Table>
+          ) : null}
+        </tbody>
         <Pagination page={this.state.page} count={this.state.count} display={this.state.display} onChangePage={this.onChangePage} />
-      </Fragment>
+      </Table>
     );
   }
 }

@@ -101,13 +101,9 @@ class AppBreadcrumb extends Component {
                 <span className={classNames("admin-name")}>{this.props.name}</span>
                 <SVG src={More} />
               </DropdownToggle>
-              <DropdownMenu right style={{ right: "auto", left: "15px !important" }}>
-                <DropdownItem header tag="div" className="text-center">
-                  <strong>Account</strong>
-                </DropdownItem>
-                <DropdownItem onClick={this.Logout}>
-                  <i className="fa fa-lock" /> Logout
-                </DropdownItem>
+              <DropdownMenu right style={{ right: "auto" }}>
+                <DropdownItem>설정</DropdownItem>
+                <DropdownItem onClick={this.Logout}>로그아웃</DropdownItem>
               </DropdownMenu>
             </AppHeaderDropdown>
           </Nav>

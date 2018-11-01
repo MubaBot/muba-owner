@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import { Table } from "components/Table";
 
@@ -12,16 +12,13 @@ export default class RequestList extends Component {
     super(props);
 
     this.state = {
-      page: parseInt(this.props.match.params.page, 10) || 1,
       lists: [],
       selectedShop: parseInt(getSelectedBusinessShop(), 10)
     };
   }
 
-  updateShopList = async page => {
-    const p = page || this.state.page;
-
-    return getBusinessShopsList({ page: p })
+  updateShopList = async () => {
+    return getBusinessShopsList()
       .then(result => this.setState({ lists: result.data.lists }))
       .catch(err => console.log(err));
   };
@@ -36,40 +33,49 @@ export default class RequestList extends Component {
 
   render() {
     return (
-      <Fragment>
-        <Table>
-          <colgroup>
-            <col />
-            <col />
-            <col />
-            <col />
-            <col />
-            <col width="113px" />
-          </colgroup>
-          <thead>
+      <Table>
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col />
+          <col width="113px" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>가게 이름</th>
+            <th>주소</th>
+            <th>전화번호</th>
+            <th>홈페이지</th>
+            <th className="text-center">메뉴</th>
+            <th className="text-center">관리</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.lists.map((x, i) => (
+            <ShopListItem
+              key={x._id}
+              no={i + 1}
+              id={x._id}
+              {...x}
+              selected={this.state.selectedShop === x._id}
+              reloadList={this.updateShopList}
+              selectShop={this.selectShop}
+            />
+          ))}
+
+          {this.state.lists.length === 0 ? (
             <tr>
-              <th>가게 이름</th>
-              <th>주소</th>
-              <th>번호</th>
-              <th>홈페이지</th>
-              <th className="text-center">메뉴</th>
-              <th className="text-center">관리</th>
+              <td className="alignCenter" colSpan="7">
+                등록된 사업장이 없습니다.
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {this.state.lists.map((x, i) => (
-              <ShopListItem
-                key={x._id}
-                id={x._id}
-                {...x}
-                selected={this.state.selectedShop === x._id}
-                reloadList={this.updateShopList}
-                selectShop={this.selectShop}
-              />
-            ))}
-          </tbody>
-        </Table>
-      </Fragment>
+          ) : null}
+        </tbody>
+      </Table>
     );
   }
 }

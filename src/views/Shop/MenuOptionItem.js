@@ -1,12 +1,7 @@
-import "react-dates/initialize";
-import "react-dates/lib/css/_datepicker.css";
-
 import React, { Component } from "react";
-import { ButtonGroup, Button, Input } from "reactstrap";
 
 import Switch from "react-switch";
-
-import "moment/locale/ko";
+import accounting from "accounting-js";
 
 import { ShopApi } from "api";
 
@@ -29,10 +24,26 @@ export default class MenuOptionItem extends Component {
     });
   };
 
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if (nextState.name === this.state.name && nextState.price === this.state.price && nextState.use === this.state.use) return false;
+    return true;
+  };
+
+  componentDidUpdate = () => (this.props.register ? null : this.onModify());
+
   handleChange = use => this.setState({ use });
   onChange = e => this.setState({ [e.target.name]: e.target.value });
+  onChangePrice = e => {
+    const num = e.target.value.replace(/,/gi, "");
+    if (parseInt(num, 10) >= 0) {
+      this.setState({ price: parseInt(num, 10) });
+    } else {
+      this.setState({ price: 0 });
+    }
+  };
 
-  onRegister = () => {
+  onRegister = e => {
+    e.preventDefault();
     ShopApi.addShopOptions({ shop: this.props.id, name: this.state.name, menu: this.props.menu, price: this.state.price, use: this.state.use })
       .then(() => this.props.updateOptionInfo())
       .catch(err => console.log(err));
@@ -44,7 +55,8 @@ export default class MenuOptionItem extends Component {
       .catch(err => console.log(err));
   };
 
-  onDelete = () => {
+  onDelete = e => {
+    e.preventDefault();
     ShopApi.deleteShopOptions({ shop: this.props.id, id: this.props._id })
       .then(() => this.props.updateOptionInfo())
       .catch(err => console.log(err));
@@ -55,37 +67,41 @@ export default class MenuOptionItem extends Component {
       <tr>
         <td>
           <Switch
+            className="switch"
             onChange={this.handleChange}
             checked={this.state.use}
-            onColor="#86d3ff"
-            onHandleColor="#2693e6"
-            handleDiameter={30}
+            offColor="#dee2e6"
+            onColor="#468ef7"
+            onHandleColor="#FFF"
+            handleDiameter={22}
             uncheckedIcon={false}
             checkedIcon={false}
-            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-            height={20}
+            boxShadow="0px 0px 0px rgba(0, 0, 0, 0.6)"
+            activeBoxShadow="0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
+            height={24}
             width={48}
           />
         </td>
         <td>
-          <Input type="text" name="name" value={this.state.name} onChange={this.onChange} disabled={this.props.register ? false : true} />
+          <input type="text" name="name" value={this.state.name} placeholder="옵션" onChange={this.onChange} disabled={this.props.register ? false : true} />
         </td>
         <td>
-          <Input type="number" name="price" value={this.state.price} onChange={this.onChange} />
+          <div className="price">
+            <input
+              type="text"
+              name="price"
+              value={accounting.formatMoney(this.state.price, { symbol: "", format: "%v", precision: 0 })}
+              placeholder="가격"
+              onChange={this.onChangePrice}
+            />
+            <span>원</span>
+          </div>
         </td>
 
         <td>
-          <ButtonGroup>
-            <Button color="success" onClick={this.props.register ? this.onRegister : this.onModify}>
-              {this.props.register ? "추가" : "적용"}
-            </Button>
-            {this.props.register ? null : (
-              <Button color="danger" onClick={this.onDelete}>
-                삭제
-              </Button>
-            )}
-          </ButtonGroup>
+          <button className={this.props.register ? "add event" : "delete event"} onClick={this.props.register ? this.onRegister : this.onDelete}>
+            {this.props.register ? "추가" : "삭제"}
+          </button>
         </td>
       </tr>
     );
