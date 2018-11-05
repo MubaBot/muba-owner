@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Switch from "react-switch";
 import SVG from "react-inlinesvg";
 import SearchIcon from "assets/img/icons/icon-search.svg";
 
@@ -53,6 +54,9 @@ export default class Setting extends Component {
       name: "",
       search: "",
 
+      OPEN: false,
+      DELIVERY: false,
+
       HOMEPAGE: "",
       PHONE: "",
       SHOPNAME: "",
@@ -102,6 +106,9 @@ export default class Setting extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
   onSearch = e => (e.keyCode === 13 ? this.searchMap() : null);
 
+  handleChangeOpen = OPEN => this.setState({ OPEN });
+  handleChangeDelivery = DELIVERY => this.setState({ DELIVERY });
+
   searchMap = () => {
     const search = this.state.search;
     geocoder.addressSearch(search, function(result, status) {
@@ -128,7 +135,9 @@ export default class Setting extends Component {
       name: this.state.SHOPNAME,
       detail: this.state.ADDRESSDETAIL,
       phone: this.state.PHONE,
-      homepage: this.state.HOMEPAGE
+      homepage: this.state.HOMEPAGE,
+      open: this.state.OPEN,
+      delivery: this.state.DELIVERY
     })
       .then(() => this.props.updateShopInfo())
       .catch(err => console.log(err));
@@ -159,7 +168,14 @@ export default class Setting extends Component {
     shop = nextProps.shop;
     ADDRESS = nextProps.shop_address.ADDRESS;
 
-    this.setState({ PHONE: nextProps.PHONE, SHOPNAME: nextProps.SHOPNAME, ADDRESSDETAIL: nextProps.shop_address.ADDRESSDETAIL, HOMEPAGE: nextProps.HOMEPAGE });
+    this.setState({
+      PHONE: nextProps.PHONE || "",
+      SHOPNAME: nextProps.SHOPNAME || "",
+      ADDRESSDETAIL: nextProps.shop_address.ADDRESSDETAIL || "",
+      HOMEPAGE: nextProps.HOMEPAGE || "",
+      OPEN: nextProps.OPEN || false,
+      DELIVERY: nextProps.DELIVERY || false
+    });
   };
 
   render() {
@@ -195,6 +211,42 @@ export default class Setting extends Component {
           </form>
         </div>
         <div>
+          <div className="controller">
+            <p>오픈</p>
+
+            <Switch
+              className="switch"
+              onChange={this.handleChangeOpen}
+              checked={this.state.OPEN}
+              offColor="#dee2e6"
+              onColor="#468ef7"
+              onHandleColor="#FFF"
+              handleDiameter={22}
+              uncheckedIcon={false}
+              checkedIcon={false}
+              boxShadow="0px 0px 0px rgba(0, 0, 0, 0.6)"
+              activeBoxShadow="0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
+              height={24}
+              width={48}
+            />
+            <p>배달</p>
+
+            <Switch
+              className="switch"
+              onChange={this.handleChangeDelivery}
+              checked={this.state.DELIVERY}
+              offColor="#dee2e6"
+              onColor="#468ef7"
+              onHandleColor="#FFF"
+              handleDiameter={22}
+              uncheckedIcon={false}
+              checkedIcon={false}
+              boxShadow="0px 0px 0px rgba(0, 0, 0, 0.6)"
+              activeBoxShadow="0px 0px 0px 0px rgba(0, 0, 0, 0.2)"
+              height={24}
+              width={48}
+            />
+          </div>
           <div className="mapSearch">
             <input type="text" name="search" placeholder="주소 검색" onChange={this.onChange} onKeyDown={this.onSearch} />
             <button onClick={this.searchMap}>

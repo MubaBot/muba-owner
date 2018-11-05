@@ -88,13 +88,19 @@ const updateShopAddressLatLng = async ({ shop, address, lat, lng }) => {
   });
 };
 
-const updateShopInfo = async ({ shop, name, detail, phone, homepage }) => {
+const updateShopInfo = async ({ shop, name, detail, phone, homepage, open, delivery }) => {
   return Axios.Put(["/api/shop", shop].join("/"), {
     name,
     detail,
     phone,
-    homepage
+    homepage,
+    open,
+    delivery
   });
+};
+
+const updateMenuPhoto = async ({ shop, menu, data }) => {
+  return Axios.Put(["/api/shop", shop, "menu", menu, "photo"].join("/"), data);
 };
 
 export {
@@ -112,5 +118,6 @@ export {
   modifyShopOptions,
   deleteShopOptions,
   updateShopAddressLatLng,
-  updateShopInfo
+  updateShopInfo,
+  updateMenuPhoto
 };

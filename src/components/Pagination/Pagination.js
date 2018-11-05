@@ -65,7 +65,7 @@ export default class TablePagination extends Component {
 
               {this.state.items.map((x, i) => (
                 <li key={x}>
-                  <button className={x === this.state.page ? "active" : ""} disabled={this.state.page === 1} onClick={() => this.onClick(x)}>
+                  <button className={x === this.state.page ? "active" : ""} disabled={this.state.page === x} onClick={() => this.onClick(x)}>
                     {x}
                   </button>
                 </li>

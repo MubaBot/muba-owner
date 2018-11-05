@@ -33,6 +33,8 @@ export default class Shop extends Component {
         ADDRLNG: 127.04485358330714,
         ADMIN: false
       },
+      OPEN: false,
+      DELIVERY: false,
       shop_menus: []
     };
   }

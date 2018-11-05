@@ -65,11 +65,25 @@ export default class MenuItem extends Component {
         .catch(err => console.log(err));
   };
 
+  handleFileUpload = e => {
+    const file = e.target.files[0];
+    this.uploadDocumentRequest(file, file.name);
+  };
+
+  uploadDocumentRequest = (file, name) => {
+    const data = new FormData();
+    data.append("photo", file);
+
+    ShopApi.updateMenuPhoto({ shop: this.props.shop, menu: this.props.id, data: data })
+      .then(() => this.props.updateShopInfo())
+      .catch(() => alert("죄송합니다. 다시 시도해주세요."));
+  };
+
   render() {
     return (
       <div>
         <div className="photo">
-          <img width="100%" src={this.props.URL || "http://192.168.0.8:3030/static/public/img/noimage.png"} alt="Menu" />
+          <img width="100%" src={"https://api.mubabot.com/static/" + (this.props.URL ? "menu/" + this.props.URL : "public/img/noimage.png")} alt="Menu" />
         </div>
 
         {this.props.register ? null : (
@@ -128,9 +142,9 @@ export default class MenuItem extends Component {
             />
           </div>
 
-          <div className="img">
+          <div className="img" hidden={this.props.register}>
             <span>사진 변경</span>
-            <input type="file" name="file" id="exampleFile" />
+            <input type="file" name="file" accept="image/*" onChange={this.handleFileUpload} />
           </div>
 
           <div className="controller" hidden={this.props.register}>

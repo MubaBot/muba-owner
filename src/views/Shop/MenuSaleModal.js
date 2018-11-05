@@ -27,16 +27,16 @@ export default class MenuSaleModal extends Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.modal} toggle={this.props.toggle} style={{ minWidth: 1050, maxWidth: 1050 }}>
-        <ModalHeader toggle={this.props.toggle}>{this.state.name}</ModalHeader>
+      <Modal isOpen={this.props.modal} style={{ minWidth: 1050, maxWidth: 1050 }}>
+        <ModalHeader>{this.state.name}</ModalHeader>
         <ModalBody>
           <Table>
             <colgroup>
-              <col width="65px" />
               <col />
-              <col width="65px" />
+              <col />
+              <col />
               <col width="200px" />
-              <col width="65px" />
+              <col />
               <col width="120px" />
               <col width="135px" />
               <col />

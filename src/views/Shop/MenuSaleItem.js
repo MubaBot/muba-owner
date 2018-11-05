@@ -49,7 +49,6 @@ export default class MenuSaleItem extends Component {
       useDate: nextProps.USEDATE || false,
       startDate: moment(nextProps.STARTDAY || moment().format("YYYYMMDD"), "YYYYMMDD"),
       endDate: moment(nextProps.ENDDAY || moment().format("YYYYMMDD"), "YYYYMMDD"),
-      focused: false,
 
       useTime: nextProps.USETIME || false,
       startTime: {
@@ -75,7 +74,6 @@ export default class MenuSaleItem extends Component {
       isEqual(nextState.useDate, this.state.useDate) &&
       isEqual(nextState.startDate, this.state.startDate) &&
       isEqual(nextState.endDate, this.state.endDate) &&
-      isEqual(nextState.focused, this.state.focused) &&
       isEqual(nextState.useTime, this.state.useTime) &&
       isEqual(nextState.startTime, this.state.startTime) &&
       isEqual(nextState.endTime, this.state.endTime) &&
@@ -83,7 +81,8 @@ export default class MenuSaleItem extends Component {
       isEqual(nextState.displayEndTime, this.state.displayEndTime) &&
       isEqual(nextState.useLimit, this.state.useLimit) &&
       isEqual(nextState.limit, this.state.limit) &&
-      isEqual(nextState.price, this.state.price)
+      isEqual(nextState.price, this.state.price) &&
+      isEqual(nextState.focusedInput, this.state.focusedInput)
     )
       return false;
 
@@ -170,7 +169,6 @@ export default class MenuSaleItem extends Component {
             onFocusChange={focusedInput => this.setState({ focusedInput, displayStartTime: false, displayEndTime: false })}
             minimumNights={0}
             small={true}
-            customArrowIcon={<span>~</span>}
           />
         </td>
 

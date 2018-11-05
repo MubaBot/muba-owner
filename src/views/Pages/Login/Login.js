@@ -37,7 +37,7 @@ class Login extends Component {
             <input name="password" type="password" placeholder="비밀번호" onChange={this.onChange} />
 
             <button>로그인</button>
-            <Link to="register">Register</Link>
+            <Link to="register">회원가입</Link>
           </form>
         </div>
       </div>

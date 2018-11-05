@@ -26,8 +26,8 @@ export default class MenuOptionModal extends Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.modal} toggle={this.props.toggle} style={{ minWidth: 680, maxWidth: 680 }}>
-        <ModalHeader toggle={this.props.toggle}>{this.state.name}</ModalHeader>
+      <Modal isOpen={this.props.modal} style={{ minWidth: 680, maxWidth: 680 }}>
+        <ModalHeader>{this.state.name}</ModalHeader>
         <ModalBody>
           <Table>
             <colgroup>
