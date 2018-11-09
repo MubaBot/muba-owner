@@ -12,7 +12,8 @@ export default class Register extends Component {
     shop_id: 0,
     name: "",
     number: "",
-    modal: false
+    searchModal: false,
+    registerModal: false
   };
 
   handleFileUpload = e => {
@@ -27,16 +28,20 @@ export default class Register extends Component {
     uploadPhoto(data).then(res => this.setState({ file: res.data.name, ext: res.data.ext }));
   };
 
-  toggle = e => {
+  searchToggle = e => {
     if (e) e.preventDefault();
-    this.setState({ modal: !this.state.modal });
+    this.setState({ searchModal: !this.state.searchModal });
+  };
+
+  registerToggle = e => {
+    if (e) e.preventDefault();
+    this.setState({ registerModal: !this.state.registerModal });
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   selectShop = (id, name) => {
-    this.setState({ shop_id: id, shop: name });
-    this.toggle();
+    this.setState({ shop_id: id, shop: name, searchModal: false, registerModal: false });
   };
 
   onSubmit = e => {
@@ -58,7 +63,8 @@ export default class Register extends Component {
   };
 
   register = () => {
-    this.toggle();
+    this.searchToggle();
+    this.registerToggle();
   };
 
   render() {
@@ -69,8 +75,8 @@ export default class Register extends Component {
             <div className="formGroup">
               <p>상점 찾기</p>
               <div>
-                <a onClick={this.toggle}>{this.state.shop || "상점 찾기"}</a>
-                <button onClick={this.toggle}>검색</button>
+                <a onClick={this.searchToggle}>{this.state.shop || "상점 찾기"}</a>
+                <button onClick={this.searchToggle}>검색</button>
               </div>
             </div>
 
@@ -95,8 +101,8 @@ export default class Register extends Component {
             <button>신청하기</button>
           </form>
 
-          <SearchModal modal={this.state.modal} toggle={this.toggle} selectShop={this.selectShop} register={this.register} />
-          <RegisterModal />
+          <SearchModal modal={this.state.searchModal} toggle={this.searchToggle} selectShop={this.selectShop} register={this.register} />
+          {this.state.registerModal ? <RegisterModal modal={this.state.registerModal} toggle={this.registerToggle} selectShop={this.selectShop} /> : null}
         </div>
       </div>
     );

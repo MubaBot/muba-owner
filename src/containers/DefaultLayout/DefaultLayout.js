@@ -35,13 +35,14 @@ class DefaultLayout extends Component {
     super(props);
 
     this.state = {
-      name: ""
+      name: "",
+      id: 0
     };
 
     AuthApi.checkLogin().then(async data => {
       if (data.isLogin === false) this.props.history.push("/login");
       else {
-        this.setState({ name: data.name });
+        this.setState({ name: data.name, id: data.id });
         await AuthApi.setAuthentication(data.token);
 
         var client = new W3CWebSocket("wss://push.mubabot.com/", "order");
@@ -99,7 +100,13 @@ class DefaultLayout extends Component {
               <Switch>
                 {routes.map((route, idx) => {
                   return route.component ? (
-                    <Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => <route.component {...props} />} />
+                    <Route
+                      key={idx}
+                      path={route.path}
+                      exact={route.exact}
+                      name={route.name}
+                      render={props => <route.component {...props} user={{ id: this.state.id, name: this.state.name }} />}
+                    />
                   ) : null;
                 })}
                 <Redirect from="/" to="/business/list" />

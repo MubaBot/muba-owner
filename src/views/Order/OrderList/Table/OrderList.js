@@ -3,6 +3,7 @@ import { Table } from "components/Table";
 import { isEqual } from "lodash";
 
 import OrderListItem from "./OrderListItem";
+import OrderRefuseModal from "./OrderRefuseModal";
 
 import { OrderApi, ShopApi } from "api";
 
@@ -16,7 +17,9 @@ export default class OrderList extends Component {
       page: parseInt(this.props.match.params.page, 10) || 1,
       lists: [],
       count: 0,
-      selectedShop: parseInt(ShopApi.getSelectedBusinessShop(), 10)
+      selectedShop: parseInt(ShopApi.getSelectedBusinessShop(), 10),
+      refuse: 0,
+      modal: false
     };
   }
 
@@ -31,6 +34,9 @@ export default class OrderList extends Component {
     }
   };
 
+  refuseOrder = id => this.setState({ modal: true, refuse: id });
+  toggle = () => this.setState({ modal: !this.state.modal });
+
   updateOrderList = page => {
     const p = page || this.state.page;
 
@@ -43,11 +49,15 @@ export default class OrderList extends Component {
           update: update,
           count: result.data.count,
           display: result.data.displayCount,
+          modal: false,
           now: 0
         });
       })
       .catch(err => {
-        console.log(err);
+        if (err.response.status === 403) {
+          alert("사업장을 선택해주세요.");
+          return this.props.history.push("/business/list");
+        }
       });
   };
 
@@ -80,7 +90,14 @@ export default class OrderList extends Component {
         </thead>
         <tbody>
           {this.state.lists.map((x, i) => (
-            <OrderListItem key={x._id} no={i + 1 + (this.state.page - 1) * this.state.count} id={x._id} {...x} reloadList={this.updateOrderList} />
+            <OrderListItem
+              key={x._id}
+              no={i + 1 + (this.state.page - 1) * this.state.count}
+              id={x._id}
+              {...x}
+              reloadList={this.updateOrderList}
+              onRefuse={this.refuseOrder}
+            />
           ))}
 
           {this.state.lists.length === 0 ? (
@@ -92,6 +109,13 @@ export default class OrderList extends Component {
           ) : null}
         </tbody>
         <Pagination page={this.state.page} count={this.state.count} display={this.state.display} onChangePage={this.onChangePage} />
+        <OrderRefuseModal
+          modal={this.state.modal}
+          shop={this.state.selectedShop}
+          refuse={this.state.refuse}
+          toggle={this.toggle}
+          updateOrderList={this.updateOrderList}
+        />
       </Table>
     );
   }

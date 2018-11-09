@@ -8,11 +8,10 @@ import { OrderApi } from "api";
 
 export default class OrderListItem extends Component {
   onAllow = () => OrderApi.setOrderAllow({ shop: this.props.shop._id, id: this.props._id }).then(() => this.props.reloadList());
-  onRefuse = () => OrderApi.setOrderRefuse({ shop: this.props.shop._id, id: this.props._id }).then(() => this.props.reloadList());
   displayRefuse = refuse => {
     switch (refuse) {
       case 0:
-        return "거절함";
+        return this.props.order_refuse_message ? this.props.order_refuse_message.NAME : "거절함";
       case 2:
         return "취소됨";
       case null:
@@ -46,7 +45,7 @@ export default class OrderListItem extends Component {
             {this.props.ADMISSION === null || this.props.ADMISSION !== 1 ? (
               <button
                 className={this.props.ADMISSION === null ? "cancel" : "cancel admission"}
-                onClick={this.onRefuse}
+                onClick={() => this.props.onRefuse(this.props._id)}
                 disabled={this.props.ADMISSION !== null}
               >
                 {this.displayRefuse(this.props.ADMISSION)}

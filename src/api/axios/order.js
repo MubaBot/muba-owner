@@ -12,8 +12,20 @@ const setOrderAllow = async ({ shop, id }) => {
   return Axios.Put(["/api/shop", shop, "order", id, "allow"].join("/"));
 };
 
-const setOrderRefuse = async ({ shop, id }) => {
-  return Axios.Put(["/api/shop", shop, "order", id, "refuse"].join("/"));
+const setOrderRefuse = async ({ shop, id, admission }) => {
+  return Axios.Put(["/api/shop", shop, "order", id, "refuse", admission].join("/"));
 };
 
-export { getOrderListForOwner, getOrderListForOwnerByAdmission, setOrderAllow, setOrderRefuse };
+const addRefuseMessage = async ({ shop, name, message }) => {
+  return Axios.Post(["/api/shop", shop, "order", "refuse"].join("/"), { name, message });
+};
+
+const getRefuseMessages = async ({ shop }) => {
+  return Axios.Get(["/api/shop", shop, "order", "refuse"].join("/"));
+};
+
+const modifyOrderRefuseMessage = async ({ shop, id, name, message }) => {
+  return Axios.Put(["/api/shop", shop, "order", "refuse", id].join("/"), { name, message });
+};
+
+export { getOrderListForOwner, getOrderListForOwnerByAdmission, setOrderAllow, setOrderRefuse, addRefuseMessage, getRefuseMessages, modifyOrderRefuseMessage };

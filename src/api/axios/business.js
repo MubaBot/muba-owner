@@ -12,4 +12,8 @@ const uploadPhoto = async data => {
   return Axios.Post("/api/business/photo", data);
 };
 
-export { getBusinessShopsList, requestRegister, uploadPhoto };
+const registerShop = async ({ name, address, detail, lat, lng, phone, homepage }) => {
+  return Axios.Post("/api/business/shop", { name, address, detail, lat, lng, phone, homepage });
+};
+
+export { getBusinessShopsList, requestRegister, uploadPhoto, registerShop };

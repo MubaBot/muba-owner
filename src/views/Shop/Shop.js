@@ -10,25 +10,13 @@ export default class Shop extends Component {
   constructor(props) {
     super(props);
 
-    const shop = ShopApi.getSelectedBusinessShop();
-    if (shop === null) {
-      alert("사업장을 선택해주세요.");
-      this.props.history.push("/business/list");
-    }
-
     this.state = {
-      shop: shop ? shop : false,
+      shop: false,
       HOMEPAGE: "",
       PHONE: "",
       SHOPNAME: "",
       shop_address: {
-        ADDRESS: {
-          state: "",
-          city: "",
-          address1: "",
-          address2: "",
-          options: ""
-        },
+        ADDRESS: "",
         ADDRLAT: 37.50374576425619,
         ADDRLNG: 127.04485358330714,
         ADMIN: false
@@ -39,9 +27,14 @@ export default class Shop extends Component {
     };
   }
 
-  updateShopInfo = () =>
-    getShopInfo({ id: this.state.shop })
+  updateShopInfo = id =>
+    getShopInfo({ id: id || this.state.shop })
       .then(info => {
+        if (info.data.shop.OWNERID !== this.props.user.id) {
+          alert("사업장을 선택해주세요.");
+          return this.props.history.push("/business/list");
+        }
+
         this.setState({ ...info.data.shop });
       })
       .catch(err => {
@@ -49,10 +42,22 @@ export default class Shop extends Component {
           alert("사업장을 선택해주세요.");
           return this.props.history.push("/business/list");
         }
-        alert("error");
+
+        if (err.response.status === 404) {
+          alert("사업장을 선택해주세요.");
+          return this.props.history.push("/business/list");
+        }
       });
 
-  componentDidMount = () => (this.state.shop ? this.updateShopInfo() : null);
+  componentDidMount = () => {
+    const shop = ShopApi.getSelectedBusinessShop();
+    if (shop === null) {
+      alert("사업장을 선택해주세요.");
+      this.props.history.push("/business/list");
+    }
+    this.updateShopInfo(shop);
+    this.setState({ shop: shop });
+  };
 
   render() {
     return (

@@ -2,7 +2,7 @@ import * as Axios from "./index";
 import zpad from "zpad";
 
 const searchShop = async ({ keyword, page }) => {
-  return Axios.Get(["/api/shop/list", page, keyword].join("/"));
+  return Axios.Get(["/api/business/shop", page, keyword].join("/"));
 };
 
 const getShopInfo = async ({ id }) => {
