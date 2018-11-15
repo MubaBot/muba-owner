@@ -76,7 +76,7 @@ export default class Payment extends Component {
 
     if (this.state.name === "") return alert("입금자명을 입력해주세요.");
     if (this.state.bank === "" || this.state.account === "") return alert("환불계좌를 입력해주세요.");
-    if (!(parseInt(this.state.day, 10) > 0)) return alert("신청 기간을 선택해주세요");
+    if (!(parseInt(this.state.day, 10) > 30)) return alert("최소 30일이상 신청해주세요");
 
     ShopApi.requestService({ shop: this.state._id, name: this.state.name, day: this.state.day, bank: this.state.bank, account: this.state.account })
       .then(() => {
@@ -137,6 +137,9 @@ export default class Payment extends Component {
               </p>
               <p>
                 * <b>입금 후</b> 신청해주시길 바랍니다.
+              </p>
+              <p>
+                * 서비스는 최소 <b>30일</b>신청가능합니다.
               </p>
               <p>
                 * 기존 기간이 남아있을 경우 <b>연장</b>되어 신청됩니다.
