@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
+import moment from "moment";
+
 import { ShopApi } from "api";
-import { getShopInfo } from "api/axios/shop";
 
 import Setting from "./Setting";
 import Menu from "./Menu";
@@ -15,12 +16,11 @@ export default class Shop extends Component {
       HOMEPAGE: "",
       PHONE: "",
       SHOPNAME: "",
-      shop_address: {
-        ADDRESS: "",
-        ADDRLAT: 37.50374576425619,
-        ADDRLNG: 127.04485358330714,
-        ADMIN: false
-      },
+      ADDRESS: "",
+      ADDRESSDETAIL: "",
+      ADDRLAT: 37.50374576425619,
+      ADDRLNG: 127.04485358330714,
+      ADMIN: false,
       OPEN: false,
       DELIVERY: false,
       shop_menus: []
@@ -28,11 +28,20 @@ export default class Shop extends Component {
   }
 
   updateShopInfo = id =>
-    getShopInfo({ id: id || this.state.shop })
+    ShopApi.getShopInfo({ id: id || this.state.shop })
       .then(info => {
         if (info.data.shop.OWNERID !== this.props.user.id) {
           alert("사업장을 선택해주세요.");
           return this.props.history.push("/business/list");
+        }
+
+        if (
+          moment(info.data.shop.ENDDATE)
+            .add(1, "days")
+            .unix() < moment().unix()
+        ) {
+          alert("서비스에 등록해주세요.");
+          return this.props.history.push("/payment");
         }
 
         this.setState({ ...info.data.shop });
@@ -49,12 +58,15 @@ export default class Shop extends Component {
         }
       });
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const shop = ShopApi.getSelectedBusinessShop();
     if (shop === null) {
       alert("사업장을 선택해주세요.");
       this.props.history.push("/business/list");
     }
+
+    while (this.props.user.id === 0) await new Promise((resolve, reject) => setTimeout(() => resolve(), 100));
+
     this.updateShopInfo(shop);
     this.setState({ shop: shop });
   };

@@ -37,6 +37,16 @@ const Shop = Loadable({
   loading: Loading
 });
 
+const Payment = Loadable({
+  loader: () => import("./views/Payment"),
+  loading: Loading
+});
+
+const Settings = Loadable({
+  loader: () => import("./views/Settings"),
+  loading: Loading
+});
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: "/", exact: true, name: "Home", component: DefaultLayout },
@@ -51,7 +61,9 @@ const routes = [
 
   { path: "/shop", name: "상점 관리", component: Shop },
 
-  { path: "/payment", name: "Dashboard", component: Dashboard }
+  { path: "/payment", name: "무바 신청", component: Payment },
+
+  { path: "/setting", name: "설정", component: Settings }
 ];
 
 export default routes;

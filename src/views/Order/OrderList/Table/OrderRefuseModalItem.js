@@ -13,7 +13,7 @@ export default class MenuOptionItem extends Component {
       message: props.MESSAGE || ""
     };
 
-    this.onModify = debounce(this.onModify, 1000);
+    this.onModify = debounce(this.onModify, 100);
   }
 
   componentWillReceiveProps = nextProps => {

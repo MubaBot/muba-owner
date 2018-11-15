@@ -51,6 +51,7 @@ export default class RequestList extends Component {
             <th>전화번호</th>
             <th>홈페이지</th>
             <th className="text-center">메뉴</th>
+            <th className="text-center">무바 만료</th>
             <th className="text-center">관리</th>
           </tr>
         </thead>
@@ -69,7 +70,7 @@ export default class RequestList extends Component {
 
           {this.state.lists.length === 0 ? (
             <tr>
-              <td className="alignCenter" colSpan="7">
+              <td className="alignCenter" colSpan="10">
                 등록된 사업장이 없습니다.
               </td>
             </tr>

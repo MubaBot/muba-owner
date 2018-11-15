@@ -103,6 +103,14 @@ const updateMenuPhoto = async ({ shop, menu, data }) => {
   return Axios.Put(["/api/shop", shop, "menu", menu, "photo"].join("/"), data);
 };
 
+const requestService = async ({ shop, name, day, bank, account }) => {
+  return Axios.Post(["/api/shop", shop, "service"].join("/"), { name, day, account: [bank, account].join(" ") });
+};
+
+const getServicePrice = async () => {
+  return Axios.Get("/api/shop/service/price").then(result => result.data.price);
+};
+
 export {
   searchShop,
   getShopInfo,
@@ -119,5 +127,7 @@ export {
   deleteShopOptions,
   updateShopAddressLatLng,
   updateShopInfo,
-  updateMenuPhoto
+  updateMenuPhoto,
+  requestService,
+  getServicePrice
 };

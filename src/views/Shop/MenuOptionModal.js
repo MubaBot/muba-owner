@@ -53,7 +53,7 @@ export default class MenuOptionModal extends Component {
           </Table>
         </ModalBody>
         <ModalFooter>
-          <button onClick={this.props.toggle}>확인</button>
+          <button onClick={this.props.toggle}>닫기</button>
         </ModalFooter>
       </Modal>
     );

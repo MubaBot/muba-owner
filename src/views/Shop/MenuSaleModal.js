@@ -66,7 +66,7 @@ export default class MenuSaleModal extends Component {
         </ModalBody>
         <ModalFooter>
           <button color="secondary" onClick={this.props.toggle}>
-            확인
+            닫기
           </button>
         </ModalFooter>
       </Modal>

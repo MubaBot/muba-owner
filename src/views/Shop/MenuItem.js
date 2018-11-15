@@ -35,7 +35,18 @@ export default class MenuItem extends Component {
         this.props.updateShopInfo();
         alert("등록하였습니다.");
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        if (!err.response || !err.response.data || !err.response.data.success) return alert("죄송합니다. 잠시후 다시 시도해주세요.");
+        switch (err.response.data.success) {
+          case -1:
+            return alert("메뉴가 이미 존재합니다.");
+          case -2:
+            return alert("메뉴 이름을 입력해주세요.");
+
+          default:
+            return alert("죄송합니다. 잠시후 다시 시도해주세요.");
+        }
+      });
   };
 
   onModify = e => {

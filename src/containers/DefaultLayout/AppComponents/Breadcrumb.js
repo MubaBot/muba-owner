@@ -81,6 +81,10 @@ class AppBreadcrumb extends Component {
     this.props.history.push("/login");
   };
 
+  Setting = () => {
+    this.props.history.push("/setting");
+  };
+
   render() {
     const { className, tag: Tag, ...attributes } = this.props;
 
@@ -102,7 +106,7 @@ class AppBreadcrumb extends Component {
                 <SVG src={More} />
               </DropdownToggle>
               <DropdownMenu right style={{ right: "auto" }}>
-                <DropdownItem>설정</DropdownItem>
+                <DropdownItem onClick={this.Setting}>설정</DropdownItem>
                 <DropdownItem onClick={this.Logout}>로그아웃</DropdownItem>
               </DropdownMenu>
             </AppHeaderDropdown>

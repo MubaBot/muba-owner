@@ -9,6 +9,8 @@ import { OrderApi, ShopApi } from "api";
 
 import Pagination from "components/Pagination";
 
+const geocoder = new window.daum.maps.services.Geocoder();
+
 export default class OrderList extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +57,7 @@ export default class OrderList extends Component {
       })
       .catch(err => {
         if (err.response.status === 403) {
-          alert("사업장을 선택해주세요.");
+          alert("서비스를 등록하지 않았거나, 사업장이 선택되지 않았습니다.");
           return this.props.history.push("/business/list");
         }
       });
@@ -85,6 +87,7 @@ export default class OrderList extends Component {
             <th>메뉴</th>
             <th>요구사항</th>
             <th className="alignRight">가격</th>
+            <th>주문 시간</th>
             <th className="alignCenter">승인/거절</th>
           </tr>
         </thead>
@@ -97,12 +100,13 @@ export default class OrderList extends Component {
               {...x}
               reloadList={this.updateOrderList}
               onRefuse={this.refuseOrder}
+              geocoder={geocoder}
             />
           ))}
 
           {this.state.lists.length === 0 ? (
             <tr>
-              <td className="alignCenter" colSpan="8">
+              <td className="alignCenter" colSpan="9">
                 주문 기록이 없습니다.
               </td>
             </tr>

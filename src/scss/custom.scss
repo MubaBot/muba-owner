@@ -1332,3 +1332,121 @@ div.login {
     }
   }
 }
+
+.registerService {
+  display: inline-block;
+  padding: 0 24px 24px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  width: 475px;
+
+  form {
+    .formGroup {
+      margin-top: 24px;
+      p {
+        font-size: 12px;
+        line-height: 20px;
+        color: #11151a;
+        margin: 0;
+      }
+
+      input {
+        margin-top: 8px;
+        width: 100%;
+        border-radius: 3px;
+        border: solid 1px #dee2e6;
+        background-color: #ffffff;
+        padding: 12px 16px;
+
+        font-size: 14px;
+        color: #212529;
+      }
+
+      & > div {
+        flex-direction: row;
+        input {
+          width: calc(50% - 4px);
+          &:nth-child(1) {
+            margin-right: 4px;
+          }
+          &:nth-child(2) {
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+
+    & > button {
+      margin-top: 32px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      color: #ffffff;
+      border-radius: 3px;
+      background-color: #468ef7;
+    }
+
+    div.input {
+      display: flex;
+      flex-direction: column;
+
+      input {
+        border: none;
+        padding: 12px 16px;
+        font-size: 14px;
+        margin: 0;
+
+        &[name="name"] {
+          border-bottom: 1px solid #dee2e6;
+        }
+      }
+
+      & > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+        margin-top: 8px;
+
+        input {
+          width: calc(100% - 30px);
+        }
+      }
+
+      span {
+        font-size: 14px;
+        text-align: right;
+        color: #212529;
+        margin-right: 16px;
+      }
+    }
+
+    div.account {
+      & > div {
+        margin-top: 8px;
+        border: 1px solid #dee2e6;
+        border-radius: 3px;
+
+        input {
+          margin: 0 !important;
+          border: none;
+          border-radius: 0;
+        }
+
+        input:nth-child(1) {
+          width: 18%;
+          border-right: 1px solid #dee2e6;
+        }
+
+        input:nth-child(2) {
+          width: 82%;
+        }
+      }
+    }
+  }
+}

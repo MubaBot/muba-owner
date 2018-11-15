@@ -32,4 +32,12 @@ const login = async ({ id, password, ...params }) => {
   });
 };
 
-export { login, register, checkLogin };
+const getOwnerInfo = async () => {
+  return Axios.Get("/auth/me").then(res => res.data);
+};
+
+const updateUserInfo = async ({ name, email, phone, password, newpassword }) => {
+  return Axios.Put("/auth/owner", { name, email, phone, password, newpassword });
+};
+
+export { login, register, checkLogin, getOwnerInfo, updateUserInfo };

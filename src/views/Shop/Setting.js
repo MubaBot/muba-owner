@@ -67,7 +67,7 @@ export default class Setting extends Component {
   componentDidMount() {
     var container = document.getElementById("map");
     var options = {
-      center: new window.daum.maps.LatLng(this.props.shop_address.ADDRLAT, this.props.shop_address.ADDRLNG),
+      center: new window.daum.maps.LatLng(this.props.ADDRLAT, this.props.ADDRLNG),
       level: 3
     };
 
@@ -144,14 +144,14 @@ export default class Setting extends Component {
   };
 
   componentWillReceiveProps = nextProps => {
-    if (nextProps.shop_address.ADMIN === false && nextProps.shop_address.ADDRLAT === 0 && nextProps.shop_address.ADDRLNG === 0) {
+    if (nextProps.ADMIN === false && nextProps.ADDRLAT === 0 && nextProps.ADDRLNG === 0) {
       mapUpdate = true;
 
-      geocoder.addressSearch(nextProps.shop_address.ADDRESS, function(result, status) {
+      geocoder.addressSearch(nextProps.ADDRESS, function(result, status) {
         if (status === window.daum.maps.services.Status.OK) {
           updateAddressLatLng(!!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name, result[0].y, result[0].x);
         } else {
-          ps.keywordSearch(nextProps.shop_address.ADDRESS, function(result, status) {
+          ps.keywordSearch(nextProps.ADDRESS, function(result, status) {
             if (status === window.daum.maps.services.Status.OK) {
               updateAddressLatLng(!!result[0].road_address_name ? result[0].road_address_name : result[0].address_name, result[0].y, result[0].x);
             }
@@ -159,19 +159,19 @@ export default class Setting extends Component {
         }
       });
     } else {
-      shopMap(nextProps.shop_address.ADDRESS, nextProps.shop_address.ADDRLAT, nextProps.shop_address.ADDRLNG);
+      shopMap(nextProps.ADDRESS, nextProps.ADDRLAT, nextProps.ADDRLNG);
 
-      mapLat = nextProps.shop_address.ADDRLAT;
-      mapLng = nextProps.shop_address.ADDRLNG;
+      mapLat = nextProps.ADDRLAT;
+      mapLng = nextProps.ADDRLNG;
     }
 
     shop = nextProps.shop;
-    ADDRESS = nextProps.shop_address.ADDRESS;
+    ADDRESS = nextProps.ADDRESS;
 
     this.setState({
       PHONE: nextProps.PHONE || "",
       SHOPNAME: nextProps.SHOPNAME || "",
-      ADDRESSDETAIL: nextProps.shop_address.ADDRESSDETAIL || "",
+      ADDRESSDETAIL: nextProps.ADDRESSDETAIL || "",
       HOMEPAGE: nextProps.HOMEPAGE || "",
       OPEN: nextProps.OPEN || false,
       DELIVERY: nextProps.DELIVERY || false
@@ -206,7 +206,6 @@ export default class Setting extends Component {
               <p>홈페이지</p>
               <input type="text" name="HOMEPAGE" placeholder="홈페이지" value={this.state.HOMEPAGE} onChange={this.onChange} />
             </div>
-
             <button>적용</button>
           </form>
         </div>

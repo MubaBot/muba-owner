@@ -47,7 +47,7 @@ export default {
       icon: StoreAdmin
     },
     {
-      name: "무바 등록",
+      name: "무바 신청",
       url: "/payment",
       icon: MubaInsert
     }

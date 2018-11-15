@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
 import accounting from "accounting-js";
+import moment from "moment";
+import "moment/locale/ko";
 
 import OrderMenuItem from "./OrderMenuItem";
 
@@ -21,6 +23,8 @@ export default class OrderListItem extends Component {
     }
   };
 
+  componentDidMount = () => setInterval(() => this.forceUpdate(), 1000);
+
   render() {
     return (
       <tr>
@@ -35,6 +39,7 @@ export default class OrderListItem extends Component {
         <td className="alignRight">
           <b>{accounting.formatMoney(this.props.PRICE, { symbol: "원", format: "%v %s", precision: 0 })}</b>
         </td>
+        <td>{moment(this.props.createdAt).fromNow()}</td>
         <td className="alignCenter">
           <div className="btn-group">
             {this.props.ADMISSION === null || this.props.ADMISSION === 1 ? (
