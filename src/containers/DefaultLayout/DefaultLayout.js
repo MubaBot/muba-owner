@@ -71,7 +71,7 @@ class DefaultLayout extends Component {
               link: "https://owner.mubabot.com/#/order/list",
               onClick: function() {
                 window.focus();
-                window.location.reload();
+                window.location.href = "https://owner.mubabot.com/#/order/list";
                 this.close();
               }
             });
