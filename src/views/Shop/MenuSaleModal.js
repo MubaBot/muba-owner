@@ -49,7 +49,7 @@ export default class MenuSaleModal extends Component {
                 <th className="text-center">시간 제한</th>
                 <th className="text-center">할인 시간</th>
 
-                <th className="text-center">할인 제한</th>
+                <th className="text-center">개수 제한</th>
                 <th className="text-center">판매 개수</th>
                 <th className="text-center">가격</th>
 
