@@ -59,7 +59,18 @@ export default class Register extends Component {
         alert("신청하였습니다.");
         window.location.reload();
       })
-      .catch(err => {});
+      .catch(err => {
+        if (!err || !err.response || !err.response.data) alert("죄송합니다. 잠시 후 다시 시도해주세요.");
+        switch (err.response.data.success) {
+          case -1:
+            return alert("가게를 선택해주세요.");
+          case -2:
+            return alert("올바른 사진을 선택해주세요.");
+          case 0:
+          default:
+            alert("죄송합니다. 잠시 후 다시 시도해주세요.");
+        }
+      });
   };
 
   register = () => {
